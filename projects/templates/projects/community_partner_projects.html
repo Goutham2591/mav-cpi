@@ -1,0 +1,134 @@
+{% extends 'home/Community_Home.html' %}
+{% load staticfiles %}
+{% block content %}
+<style>
+
+     .btn-custom
+    {
+        position: relative;
+        width: 100px;
+        top: 5px;
+        left: 3px;
+        color: #666666;
+    }
+    .tableName{
+
+        text-align: center;
+    }
+    </style>
+<style>
+    #loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid #f3f3f3;
+  border-bottom: 16px solid red;
+  border-top: 16px solid gray;
+  border-radius: 50%;
+
+  width: 80px;
+  height: 80px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-xl-12 col-md-12 col-sm-12">
+           <div class="card" style="padding: 5px;margin-top:50px;background-color:#B3B3B3;">
+               <label style="text-align:justify;"><b style="font-size:17px;text-align:center;"><h4 style="line-height:.8em;padding-top:10px;">Projects</h4></b></label>
+           </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+     <table id="example" class="table table-bordered dt-responsive overflow-wrap:break-word" style="width:100%">
+
+                    <thead>
+            <tr>
+                <th>Project Name</th>
+                <th>Mission Area</th>
+                <th>Community Partners</th>
+                <th>Campus Partners</th>
+                <th>Engagement Type</th>
+                <th>Academic Year</th>
+                <th>Project Status</th>
+                <th>Semester</th>
+                <th>Activity Type</th>
+                <th> UNO Students</th>
+                <th> UNO Student Hours</th>
+                <th>UNO Faculty/Staff</th>
+                <th> K12 Students</th>
+                <th> K12 Hours </th>
+                <th>Community Participants</th>
+                <th>Description</th>
+                <!--<th>Actions</th>-->
+            </tr>
+            </thead>
+            <tbody>
+
+
+            {% for project in project %}
+                           <br>
+
+                            <td>{{ project.name }}</td>
+                            <td>{% for projmisn in project.projmisn %}
+                                   <b>{{ projmisn.mission_type}} : </b>{{ projmisn.mission}}<br> <br>{% endfor %} </td>
+                            <td> {% for comm_part in project.comm_part %} {{comm_part}} <br> <br> {% endfor %} </td>
+                            <td>{% for camp in project.camp%}{{camp.campus_partner}}<br> {% endfor %}</td>
+                            <td>{{ project.engagementType }}</td>
+                            <td>{{ project.semester }}</td>
+                            <td>{{ project.status}}</td>
+                            <td>{{ project.semester }}</td>
+                            <td>{{ project.activityType }}</td>
+                            <td>{{project.total_uno_students}}</td>
+                            <td>{{project.total_uno_hours}}</td>
+                            <td>{{ project.facilitator }}</td>
+                            <td>{{project.total_k12_students}}</td>
+                            <td>{{project.total_k12_hours}}</td>
+                            <td>{{project.total_other_community_members}}</td>
+                            <td>{{project.description}}</td>
+                           </tr>
+
+                {% endfor %}
+
+
+
+            </tbody>
+
+    </table>
+    <br>
+    <br>
+
+</div>
+{%  endblock %}
+
+{% block js %}
+
+<link href="{% static 'css/datatables.min.css' %}" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/af-2.3.2/b-1.5.4/b-colvis-1.5.4/b-html5-1.5.4/b-print-1.5.4/cr-1.5.0/fc-3.2.5/r-2.2.2/rg-1.1.0/rr-1.2.4/sl-1.2.6/datatables.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+    $('#example').DataTable();
+    } );
+</script>
+{% endblock %}
